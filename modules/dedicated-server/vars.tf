@@ -23,7 +23,7 @@ variable "image_offer" {
 
 variable "image_sku" {
   description = "Image SKU to apply (az vm image list)"
-  default     = "16.04-LTS"
+  default     = "18.04-LTS"
 }
 
 variable "image_version" {
@@ -35,17 +35,6 @@ variable "hostname" {
   description = "Virtual machine hostname. Used for local hostname, DNS, and storage-related names."
   default     = "valheimsrv"
 }
-
-variable "admin_username" {
-  description = "Administrator user name"
-  default     = "adminuser"
-}
-
-variable "admin_password" {
-  description = "Administrator password"
-  default     = "Adminpassword123!"
-}
-
 
     variable "instance_type"    { }
 

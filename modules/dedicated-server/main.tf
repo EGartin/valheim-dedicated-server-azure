@@ -2,16 +2,12 @@
 * PROJECT: Valheim Dedicated Server
 * FILE: DEDICATED-SERVER :: Main.tf
 * AUTHOR: Elijah Gartin [elijah.gartin@gmail.com]
-* DATE: 2021 MAY 05
+* DATE: 2021 MAY 06
 */
 locals {
   uuid = uuid()
   uuid_prefix = element(split("-", local.uuid), 0)
   uuid_four = substr(local.uuid_prefix,0,4)
-  formatmonth = element(split("-", timestamp()), 1)
-  daytime = element(split("-", timestamp()), 2)
-  formatday = element(split("T", local.daytime), 0)
-  #prefix = "${local.uuid_four}-${local.formatmonth}-${local.formatday}"
 }
 
 #Dedicated IP 
@@ -46,41 +42,31 @@ resource "azurerm_public_ip" "valheim-server-pip" {
 
 
 ## SERVER
-# And finally we build our virtual machine. This is a standard Ubuntu instance.
-# We use the shell provisioner to run a Bash script that configures Apache for 
-# the demo environment. Terraform supports several different types of 
-# provisioners including Bash, Powershell and Chef.
-resource "azurerm_virtual_machine" "valheim-server" {
+resource "azurerm_linux_virtual_machine" "valheim-server" {
   name                          = "Valheim-Server"
   location                      = var.azurerm_resource_location
   resource_group_name           = var.azurerm_resource_group
-  vm_size                       = var.instance_type
-  #custom_data                   = var.user_data
+  size                       = var.instance_type
   network_interface_ids         = [azurerm_network_interface.valheim-server-nic.id]
-  delete_os_disk_on_termination = "true"
 
-  storage_image_reference {
+  custom_data                   = var.user_data    
+
+  admin_username      = "odin"
+  admin_ssh_key {
+    username   = "odin"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  source_image_reference {
     publisher = var.image_publisher
     offer     = var.image_offer
     sku       = var.image_sku
     version   = var.image_version
   }
 
-  storage_os_disk {
-    name              = "osdisk"
-    managed_disk_type = "Standard_LRS"
+  os_disk {
+    storage_account_type = "Standard_LRS"
     caching           = "ReadWrite"
-    create_option     = "FromImage"
-  }
-
-  os_profile {
-    computer_name  = var.hostname
-    admin_username = var.admin_username
-    admin_password = var.admin_password
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
   }
 
   

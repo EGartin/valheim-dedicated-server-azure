@@ -9,7 +9,7 @@ locals {
     #env_type        = "PRODUCTION/TESTING/ETC"
     #keyname         = "YOUR-KEY"
     #You can use the "get-your-ip.sh" script and then end this variable in the vars.tf
-    your_ip         = "YOUR-IP/32"
+    your_ip         = "64.44.81.53/32"
 }
 
 # Create a resource group
@@ -56,7 +56,7 @@ module "server" {
     #env_type                = local.env_type
 
     #name_tag                = "Valheim Server"
-    #user_data               = file("./scripts/bootstrap.sh")   
+    user_data               = base64encode(file("./scripts/bootstrap.sh"))
 }
 
 
