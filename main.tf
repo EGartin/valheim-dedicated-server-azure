@@ -56,7 +56,7 @@ module "server" {
     #env_type                = local.env_type
 
     #name_tag                = "Valheim Server"
-    #user_data               = file("./scripts/bootstrap.sh")   
+    user_data               = base64encode(file("./scripts/bootstrap.sh"))
 }
 
 
