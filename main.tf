@@ -9,7 +9,7 @@ locals {
     #env_type        = "PRODUCTION/TESTING/ETC"
     #keyname         = "YOUR-KEY"
     #You can use the "get-your-ip.sh" script and then end this variable in the vars.tf
-    your_ip         = "64.44.81.53/32"
+    your_ip         = "YOUR-IP/32"
 }
 
 # Create a resource group
