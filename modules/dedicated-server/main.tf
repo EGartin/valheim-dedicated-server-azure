@@ -54,7 +54,7 @@ resource "azurerm_linux_virtual_machine" "valheim-server" {
   admin_username      = "odin"
   admin_ssh_key {
     username   = "odin"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = var.keyname
   }
 
   source_image_reference {

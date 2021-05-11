@@ -18,6 +18,7 @@ I do have some ambitions to try and create something like this for all the major
 
 ## Prerequisites
 
+  - [Azure Account](https://azure.microsoft.com/en-us/free/)
   - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 0.14.5)
 
 ## Steps
@@ -28,13 +29,11 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
 
 1. Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the locals variable for `your_ip` in the `ROOT:main.tf`. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
 
-2. Make sure you have a keypair already made in your `EC2 > Network & Security > Key Pairs` area so you can put the name of the key in the locals in `ROOT:main.tf`.  You don't need to include the .pem or .ppk extension.
+2. Change the `location` field on line 18 in `ROOT:main.tf` to put it in the azure datacenter you want. [Azure Datacenters](https://azure.microsoft.com/en-us/global-infrastructure/geographies/)
 
-3. Edit the `ROOT:provider.tf` file to choose the data center you want to deploy in. [AWS EndPoints](https://docs.aws.amazon.com/general/latest/gr/rande.html).  Input your API key here if you aren't going to push or share this code, otherwise save your credentials in a credential file or in your OS environment variables for security purposes. [Read more about Terraform and AWS credentials here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+2. Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` or modify the location/name of it in `ROOT:main.tf` in the locals on line 10.
 
-  - If you want to use the spot instance reduced cost configuration:
-    - In `ROOT:Main.tf` comment out the `module:server` block in  from lines 32 to 45. Subsequently, uncomment the `module:spotserver` right underneath it from lines 48 to 62.
-    - In `ROOT:output.tf` comment out lines 9 through 11 and uncomment lines 14-16
+3. Edit the `ROOT:provider.tf` file to input your unique identifiers for your azure subscription and active directory app: `subscription_id`,`client_id`, `client_secret`, and `tenant_id`. [Azure Terraform Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
 
 4. Once you've saved all your changes, open a terminal/command prompt to the location of this repository and run the following commands in succession:
   - `terraform init`
@@ -43,20 +42,20 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
   You can destroy all assets when you are completed using `terraform destroy`
 
   **WARNING**
-  Make sure you backup your game if you've made progress and want to keep it. Currently the S3 bucket is for read only access for security reasons. If it becomes additionally requested I may add more functionality to play with the backup functionality that ZeroBandwidth and crew have developed.
+  Make sure you backup your game if you've made progress and want to keep it. If it becomes additionally requested I may add more functionality to play with the backup functionality that ZeroBandwidth and crew have developed.
 
   Alternatively you can just backup with their scripts and then use SCP to download the backup.
 
   Example:
-  ```scp -i KEYNAME.pem ubuntu@IPADDRESS:/home/steam/backups/valheim-backup-DATEUUID.tgz ~/Downloads/valheim-backup-DATEUUID.tgz```
+  ```scp -i KEYNAME ubuntu@IPADDRESS:/home/steam/backups/valheim-backup-DATEUUID.tgz ~/Downloads/valheim-backup-DATEUUID.tgz```
 
-  You can then reupload this to S3 and have it download from the `/scripts/bootstrap.sh` script if you care to.
+  You can then reupload this to Data Blobs and have it download from the `/scripts/bootstrap.sh` script if you care to if you have to rebuild a server.
 
 ## Network Schema
 
 10.10.10.0/24 - Main Subnet (Server will build here as 10.10.10.69 (Nice))
 
-The server will currently build as a `t3.medium`. I've tested this up to 4 concurrent players without surpassing 25% CPU utilization.  Depending on the size of the world and how many users, you may need to adjust the size. With Terraform, it should be as simple as updating the line of code in `ROOT:main.tf` line 34 with the new sizing and re-running `terraform apply`. Make sure you stop the server and backup before doing it, just in case.
+The server will currently build as a `Standard_B2s` (2vCPU 4GB RAM). Depending on the size of the world and how many users, you may need to adjust the size. With Terraform, it should be as simple as updating the line of code in `ROOT:main.tf` line 41 with the new sizing and re-running `terraform apply`. Make sure you stop the server and backup before doing it, just in case.
 
 ## Support for Infrastructure as Code
 
