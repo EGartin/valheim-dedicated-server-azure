@@ -2,14 +2,15 @@
 * PROJECT: Valheim Dedicated Server
 * FILE: SECURITY-GROUPS :: Main.tf
 * AUTHOR: Elijah Gartin [elijah.gartin@gmail.com]
-* DATE: 2021 MAY 05
+* DATE: 2021 MAY 20
 */
 
-resource "azurerm_network_security_group" "ssh" {
-  name                = "SSH"
+resource "azurerm_network_security_group" "valheim_ports" {
+  name                = "Valheim_Ports"
   location            = var.azurerm_resource_location
   resource_group_name = var.azurerm_resource_group
 
+  #TCP  
   security_rule {
     name                       = "SSH"
     priority                   = 100
@@ -21,17 +22,9 @@ resource "azurerm_network_security_group" "ssh" {
     source_address_prefix      = var.your_ip
     destination_address_prefix = "*"
   }
-}
-
-resource "azurerm_network_security_group" "valheim_external_ports" {
-  name                = "Valheim_Ports"
-  location            = var.azurerm_resource_location
-  resource_group_name = var.azurerm_resource_group
-  
-  #TCP
   security_rule {
     name                       = "ValheimTCP0"
-    priority                   = 100
+    priority                   = 105
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -42,7 +35,7 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
   }
   security_rule {
     name                       = "ValheimTCP1"
-    priority                   = 101
+    priority                   = 110
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -53,7 +46,7 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
   }
   security_rule {
     name                       = "ValheimTCP2"
-    priority                   = 102
+    priority                   = 115
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -65,7 +58,7 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
   #UDP
   security_rule {
     name                       = "ValheimUDP0"
-    priority                   = 103
+    priority                   = 120
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "UDP"
@@ -76,7 +69,7 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
   }
   security_rule {
     name                       = "ValheimUDP1"
-    priority                   = 104
+    priority                   = 125
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "UDP"
@@ -87,7 +80,7 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
   }
   security_rule {
     name                       = "ValheimUDP2"
-    priority                   = 105
+    priority                   = 130
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "UDP"
@@ -98,7 +91,7 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
   }
   security_rule {
     name                       = "ValheimUDP3"
-    priority                   = 106
+    priority                   = 135
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "UDP"
@@ -108,29 +101,3 @@ resource "azurerm_network_security_group" "valheim_external_ports" {
     destination_address_prefix = "*"
   }  
 }
-
-/*
-## SSH
-resource "aws_security_group" "ssh" {
-    name        = "Secure Shell"
-    description = "SSH Communication"
-    vpc_id = var.vpc_id
-
-    ingress{
-        from_port       = 22
-        to_port         = 22
-        protocol        = "tcp"
-        cidr_blocks     = var.your_ip
-    }
-
-    egress{
-        from_port       = 0
-        to_port         = 0
-        protocol        = "-1"
-        cidr_blocks     = ["0.0.0.0/0"]
-    }
-    tags = {
-        Name = "TF_SSH"
-    }
-}
-*/
