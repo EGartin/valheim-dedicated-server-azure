@@ -2,7 +2,7 @@
 
 ## Terraform
 
-### 2021 MAY 05
+### 2021 MAY 20
 
 ## Disclaimer/Legal
 
@@ -27,17 +27,28 @@ You'll be editing some lines in the `ROOT:main.tf` file for the local variables 
 
 You'll notice some of the taxonomy in referring to files such as `ROOT:filename`.  Root will be the root of the folder structure. Any modules will change the name of `ROOT` to `NETWORK` for example where there is another grouping of similarily named files.  This is a Terraform thing that some people may not be familiar with.
 
-1. Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the locals variable for `your_ip` in the `ROOT:main.tf`. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
+1. `ROOT:main.tf`: Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the locals variable for `your_ip`. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
 
-2. Change the `location` field on line 18 in `ROOT:main.tf` to put it in the azure datacenter you want. [Azure Datacenters](https://azure.microsoft.com/en-us/global-infrastructure/geographies/)
+2. `ROOT:main.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` or modify the location/name of it in the locals on line 10.
 
-2. Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` or modify the location/name of it in `ROOT:main.tf` in the locals on line 10.
+3. `ROOT:main.tf`: Change the `location` field on line 18 to put it in the azure datacenter you want. 
+  - [Azure Datacenters](https://azure.microsoft.com/en-us/global-infrastructure/geographies/)
 
-3. Edit the `ROOT:provider.tf` file to input your unique identifiers for your azure subscription and active directory app: `subscription_id`,`client_id`, `client_secret`, and `tenant_id`. [Azure Terraform Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+4. `ROOT:provider.tf`: file to input your unique identifiers for your azure subscription and active directory app: 
+  - [Azure Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
+    - `subscription_id`
+  - [Azure Active Directory Registered App](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
+    - `client_id`
+    - `client_secret`
+    - `tenant_id`
 
-4. Once you've saved all your changes, open a terminal/command prompt to the location of this repository and run the following commands in succession:
+  [Azure Terraform Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+
+5. Once you've saved all your changes, open a terminal/command prompt to the location of this repository and run the following commands in succession:
   - `terraform init`
   - `terraform apply`
+
+6. To SSH to box, use `odin` as the username with the public key you provided. Ex: `ssh -i ~/.ssh/id_rsa.pub odin@public-ip`
 
   You can destroy all assets when you are completed using `terraform destroy`
 
@@ -47,7 +58,7 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
   Alternatively you can just backup with their scripts and then use SCP to download the backup.
 
   Example:
-  ```scp -i KEYNAME ubuntu@IPADDRESS:/home/steam/backups/valheim-backup-DATEUUID.tgz ~/Downloads/valheim-backup-DATEUUID.tgz```
+  ```scp -i KEYNAME odin@IPADDRESS:/home/steam/backups/valheim-backup-DATEUUID.tgz ~/Downloads/valheim-backup-DATEUUID.tgz```
 
   You can then reupload this to Data Blobs and have it download from the `/scripts/bootstrap.sh` script if you care to if you have to rebuild a server.
 
