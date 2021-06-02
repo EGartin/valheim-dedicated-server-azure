@@ -8,7 +8,7 @@
 variable "your_ip"  {
     description = "Your Public IP Address to allow you to SSH to the box"
     #You can use the "get-your-ip.sh" script get your IP
-    default     = "212.102.45.106/32"
+    default     = "{YOUR_IP}/32"
 }
 
 variable "keyname"  {
