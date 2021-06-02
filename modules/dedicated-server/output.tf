@@ -6,5 +6,5 @@
 */
 
 output "public_ip"  {
-    value = azurerm_public_ip.valheim-server-pip.ip_address
+    value = azurerm_linux_virtual_machine.valheim-server.public_ip_address
 }

@@ -31,9 +31,9 @@ module "server" {
     source                      = "./modules/dedicated-server"
     azurerm_resource_group      = azurerm_resource_group.valheim-resources.name
     azurerm_resource_location   = azurerm_resource_group.valheim-resources.location
-    instance_type               = "Standard_B2s"
+    instance_type               = "Standard_B1ls"
     subnet_id                   = module.network.network_subnet_id
     security_groups             = module.securitygroups.valheim_security_groups
-    keyname                     = var.keyname
+    keyname                     = file(var.keyname)
     user_data                   = base64encode(file("./scripts/bootstrap.sh"))
 }

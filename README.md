@@ -78,6 +78,8 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
 
 The server will currently build as a `Standard_B2s` (2vCPU 4GB RAM). Depending on the size of the world and how many users, you may need to adjust the size. With Terraform, it should be as simple as updating the line of code in `ROOT:main.tf` line 41 with the new sizing and re-running `terraform apply`. Make sure you stop the server and backup before doing it, just in case.
 
+For testing, we'll use `Standard_B1ls`
+
 ## Support for Infrastructure as Code
 
 Author: Elijah Gartin (Falkon)

@@ -18,5 +18,5 @@ resource "azurerm_subnet" "subnet" {
   name                 = "valheim-subnet"
   virtual_network_name = azurerm_virtual_network.valheim-vnet.name
   resource_group_name  = var.azurerm_resource_group
-  address_prefix       = "10.10.10.0/24"
+  address_prefixes       = ["10.10.10.0/24"]
 }

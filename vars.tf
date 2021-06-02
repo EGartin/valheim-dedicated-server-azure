@@ -14,7 +14,7 @@ variable "your_ip"  {
 variable "keyname"  {
     description = "Your path to your public key to authenticate to the server"
     #[Github Generate SSH Keys](https://docs.github.com/en/github-ae@latest/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-    default     = file("~/.ssh/id_rsa.pub")
+    default     = "~/.ssh/id_rsa.pub"
 }
 
 variable "location" {
