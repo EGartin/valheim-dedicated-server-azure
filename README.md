@@ -32,8 +32,7 @@ All critiques are welcome via the [Github Project](https://github.com/users/Elij
   - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 0.14.5)
 
 ## Steps
-I do have some ambitions to try and create something like this for all the major cloud providers. All critiques are welcome via the Github Issue tracker or through discord.
-You'll be editing some lines in the `ROOT:main.tf` file for the local variables between line 8 and 13. Steps described below. Mileage may vary depending on what data center you try to push to.
+You'll be editing some lines in the `ROOT:vars.tf` and `ROOT:provider.tf` files for the variables in your environment. The steps described below. Mileage may vary depending on what data center you try to push to.
 
 You'll notice some of the taxonomy in referring to files such as `ROOT:filename`.  Root will be the root of the folder structure. Any modules will change the name of `ROOT` to `NETWORK` for example where there is another grouping of similarily named files.  This is a Terraform thing that some people may not be familiar with.
 
