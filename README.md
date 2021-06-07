@@ -2,7 +2,7 @@
 
 ## Terraform
 
-### 2021 MAY 25
+### 2021 JUN 01
 
 ## Disclaimer/Legal
 
@@ -32,16 +32,15 @@ All critiques are welcome via the [Github Project](https://github.com/users/Elij
   - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 0.14.5)
 
 ## Steps
-I do have some ambitions to try and create something like this for all the major cloud providers. All critiques are welcome via the Github Issue tracker or through discord.
-You'll be editing some lines in the `ROOT:main.tf` file for the local variables between line 8 and 13. Steps described below. Mileage may vary depending on what data center you try to push to.
+You'll be editing some lines in the `ROOT:vars.tf` and `ROOT:provider.tf` files for the variables in your environment. The steps described below. Mileage may vary depending on what data center you try to push to.
 
 You'll notice some of the taxonomy in referring to files such as `ROOT:filename`.  Root will be the root of the folder structure. Any modules will change the name of `ROOT` to `NETWORK` for example where there is another grouping of similarily named files.  This is a Terraform thing that some people may not be familiar with.
 
-1. `ROOT:main.tf`: Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the locals variable for `your_ip`. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
+1. `ROOT:vars.tf`: Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the variable for `your_ip` on line 10. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
 
-2. `ROOT:main.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` or modify the location/name of it in the locals on line 10.
+2. `ROOT:vars.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` or modify the location/name of it in the variables file on line 15.
 
-3. `ROOT:main.tf`: Change the `location` field on line 18 to put it in the azure datacenter you want. 
+3. `ROOT:vars.tf`: Change the `location` variable on line 21 to put it in the azure datacenter you want. 
   - [Azure Datacenters](https://azure.microsoft.com/en-us/global-infrastructure/geographies/)
 
 4. `ROOT:provider.tf`: file to input your unique identifiers for your azure subscription and active directory app: 
@@ -77,6 +76,8 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
 10.10.10.0/24 - Main Subnet (Server will build here as 10.10.10.69 (Nice))
 
 The server will currently build as a `Standard_B2s` (2vCPU 4GB RAM). Depending on the size of the world and how many users, you may need to adjust the size. With Terraform, it should be as simple as updating the line of code in `ROOT:main.tf` line 41 with the new sizing and re-running `terraform apply`. Make sure you stop the server and backup before doing it, just in case.
+
+For testing, we'll use `Standard_B1ls`
 
 ## Support for Infrastructure as Code
 
