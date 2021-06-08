@@ -25,7 +25,7 @@ variable "image_offer" {
 }
 variable "image_sku" {
   description = "Image SKU to apply (az vm image list)"
-  default     = "18.04-LTS"
+  default     = "20.04-LTS"
 }
 variable "image_version" {
   description = "Version of the image to apply (az vm image list)"
