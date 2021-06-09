@@ -2,7 +2,7 @@
 * PROJECT: Valheim Dedicated Server
 * FILE: DEDICATED-SERVER :: Vars.tf
 * AUTHOR: Elijah Gartin [elijah.gartin@gmail.com]
-* DATE: 2021 MAY 20
+* DATE: 2021 JUN 09
 */
 
 variable "instance_type"            {}
@@ -21,11 +21,11 @@ variable "image_publisher" {
 }
 variable "image_offer" {
   description = "Name of the offer (az vm image list)"
-  default     = "UbuntuServer"
+  default     = "0001-com-ubuntu-server-focal"
 }
 variable "image_sku" {
   description = "Image SKU to apply (az vm image list)"
-  default     = "18.04-LTS"
+  default     = "20_04-lts-gen2"
 }
 variable "image_version" {
   description = "Version of the image to apply (az vm image list)"
@@ -35,3 +35,4 @@ variable "hostname" {
   description = "Virtual machine hostname. Used for local hostname, DNS, and storage-related names."
   default     = "valheimsrv"
 }
+
