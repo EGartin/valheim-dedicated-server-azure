@@ -29,7 +29,7 @@ All critiques are welcome via the [Github Project](https://github.com/users/Elij
 ## Prerequisites
 
   - [Azure Account](https://azure.microsoft.com/en-us/free/)
-  - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 0.14.5)
+  - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 1.0.0)
 
 ## Steps
 You'll be editing some lines in the `ROOT:vars.tf` and `ROOT:provider.tf` files for the variables in your environment. The steps described below. Mileage may vary depending on what data center you try to push to.
@@ -38,7 +38,7 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
 
 1. `ROOT:vars.tf`: Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the variable for `your_ip` on line 10. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
 
-2. `ROOT:vars.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` or modify the location/name of it in the variables file on line 15.
+2. `ROOT:vars.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` and insert that path in this section, or modify the location/name of it in the variables file on line 15.
 
 3. `ROOT:vars.tf`: Change the `location` variable on line 21 to put it in the azure datacenter you want. 
   - [Azure Datacenters](https://azure.microsoft.com/en-us/global-infrastructure/geographies/)
@@ -57,7 +57,7 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
   - `terraform init`
   - `terraform apply`
 
-6. To SSH to box, use `odin` as the username with the public key you provided. Ex: `ssh -i ~/.ssh/id_rsa.pub odin@public-ip`
+6. To SSH to box, use `odin` as the username with the public key you provided. Ex: `ssh -i {YOUR_SSH_KEY_PATH} odin@{server-public-ip}`
 
   You can destroy all assets when you are completed using `terraform destroy`
 
