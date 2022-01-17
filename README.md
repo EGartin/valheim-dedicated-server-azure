@@ -37,32 +37,25 @@ You'll be editing some lines in the `ROOT:vars.tf` and `ROOT:provider.tf` files 
 You'll notice some of the taxonomy in referring to files such as `ROOT:filename`.  Root will be the root of the folder structure. Any modules will change the name of `ROOT` to `NETWORK` for example where there is another grouping of similarily named files.  This is a Terraform thing that some people may not be familiar with.
 
 1. `ROOT:vars.tf`: Use `curl https://ipinfo.io/ip` to obtain your IP and input it in the variable for `your_ip` on line 10. This is essential for you to be able to SSH from your box.  If you intend to use a bastion host, make sure you're putting in the ip for the bastion host.
-
 1. `ROOT:vars.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` and insert that path in this section, or modify the location/name of it in the variables file on line 15.
-
 1. `ROOT:vars.tf`: Change the `location` variable on line 21 to put it in the azure datacenter you want. 
-  - [Azure Datacenters](https://infrastructuremap.microsoft.com/)
-
+    - [Azure Datacenters](https://infrastructuremap.microsoft.com/)
 1. `ROOT:provider.tf`: file to input your unique identifiers for your azure subscription and active directory app: 
-  - [Azure Subscriptions](https://pvortal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
-    - `subscription_id`
-  - Create Registered App[Azure Active Directory Registered App](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
-    - `client_id`
-    - `client_secret`
-    - `tenant_id`
-  - Add the Registered App as a Contributor [Azure IAM Role Assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal?tabs=current)
-  - [Azure Terraform Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
-
+    - [Azure Subscriptions](https://pvortal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
+      - `subscription_id`
+    - Create Registered App[Azure Active Directory Registered App](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
+      - `client_id`
+      - `client_secret`
+      - `tenant_id`
+    - Add the Registered App as a Contributor [Azure IAM Role Assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal?tabs=current)
+    - [Azure Terraform Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
 1. Once you've saved all your changes, open a terminal/command prompt to the location of this repository and run the following commands in succession:
-  - `terraform init`
-  - `terraform apply`
-
+    - `terraform init`
+    - `terraform apply`
 1. To SSH to box, use `odin` as the username with the public key you provided. Ex: `ssh -i {YOUR_SSH_KEY_PATH} odin@{server-public-ip}`
-
 1. Install Valheim in the `/opt/Dedicated_Valheim_Server_Script` folder by executing `./njordmenu.sh`.
-  - There are additional menus depending on what version you've used in the past and whether or not you want to use mods. Refer to their [repo](https://github.com/Nimdy/Dedicated_Valheim_Server_Script) for docs and support on that.
-
-  You can destroy all assets when you are completed using `terraform destroy`
+    - There are additional menus depending on what version you've used in the past and whether or not you want to use mods. Refer to their [repo](https://github.com/Nimdy/Dedicated_Valheim_Server_Script) for docs and support on that.
+1. You can destroy all assets when you are completed using `terraform destroy`
 
   **WARNING**
   Make sure you backup your game if you've made progress and want to keep it. If it becomes additionally requested I may add more functionality to play with the backup functionality that ZeroBandwidth and crew have developed.
