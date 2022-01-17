@@ -29,7 +29,7 @@ All critiques are welcome via the [Github Project](https://github.com/users/Elij
 ## Prerequisites
 
   - [Azure Account](https://azure.microsoft.com/en-us/free/)
-  - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 1.0.0)
+  - [Terraform](https://www.terraform.io/downloads.html) (Tested on version 1.1.3)
 
 ## Steps
 You'll be editing some lines in the `ROOT:vars.tf` and `ROOT:provider.tf` files for the variables in your environment. The steps described below. Mileage may vary depending on what data center you try to push to.
@@ -41,15 +41,16 @@ You'll notice some of the taxonomy in referring to files such as `ROOT:filename`
 2. `ROOT:vars.tf`: Make sure you have a keypair already made in `~/.ssh/id_rsa.pub` and insert that path in this section, or modify the location/name of it in the variables file on line 15.
 
 3. `ROOT:vars.tf`: Change the `location` variable on line 21 to put it in the azure datacenter you want. 
-  - [Azure Datacenters](https://azure.microsoft.com/en-us/global-infrastructure/geographies/)
+  - [Azure Datacenters](https://infrastructuremap.microsoft.com/)
 
 4. `ROOT:provider.tf`: file to input your unique identifiers for your azure subscription and active directory app: 
-  - [Azure Subscriptions](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
+  - [Azure Subscriptions](https://pvortal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade)
     - `subscription_id`
-  - [Azure Active Directory Registered App](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
+  - Create Registered App[Azure Active Directory Registered App](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
     - `client_id`
     - `client_secret`
     - `tenant_id`
+  - Add the Registered App as a Contributor [Azure IAM Role Assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal?tabs=current)
 
   [Azure Terraform Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
 

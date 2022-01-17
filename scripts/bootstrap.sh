@@ -7,4 +7,6 @@ sudo apt-get install -y git net-tools
 cd /opt
 git clone https://github.com/Nimdy/Dedicated_Valheim_Server_Script.git
 cd Dedicated_Valheim_Server_Script/
+sudo chmod +x advancemenu.sh
 sudo chmod +x menu.sh
+sudo chmod +x njordmenu.sh
